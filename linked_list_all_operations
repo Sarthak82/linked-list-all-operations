@@ -1,0 +1,108 @@
+class Node:
+    def __init__(self,data=None,next=None):
+        self.data=data
+        self.next=next
+
+class linked_list:
+    def __init__(self):
+        self.head=None
+        
+    #insert at the begnning
+    def insert_at_beg(self,data):
+        node=Node(data,self.head)
+        self.head=node
+    
+    # insertion at the end
+    def insert_at_end(self,data):
+        if self.head==None:
+            self.head=Node(data,None)
+            return
+        
+        itr=self.head
+        while itr.next:
+            itr=itr.next
+        
+        itr.next=Node(data,None)
+    
+    #insert values from a list
+    def insert_values(self,data_list):
+        self.head=None
+        for data in data_list:
+            self.insert_at_end(data)
+    
+    # get the length of the linked list     
+    def get_length(self):
+        count=0
+        itr=self.head
+        while itr:
+            itr=itr.next
+            count+=1
+        return count
+    
+    # removing element at the given index:
+    def remove_at(self,index):
+        if index<0 or index>=self.get_length():
+            raise Exception('Not valid index')
+        # at the begining
+        if index==0:
+            self.head=self.head.next
+            return
+        
+        count=0
+        itr=self.head
+        while itr:
+            if count == index-1:
+                itr.next=itr.next.next
+                break
+            itr=itr.next
+            count+=1
+    
+    # indertion at given index
+    def insert_at(self,index,data):
+        if index<0 or index>=self.get_length():
+            raise Exception('Not valid index')
+        #at the begining    
+        if index==0:
+            node=Node(data,self.head)
+            self.head=node
+        
+        count=0
+        itr=self.head
+        while itr:
+            if count == index-1:
+                node=Node(data,itr.next)
+                itr.next=node
+                break
+            itr=itr.next
+            count+=0
+    
+    def print(self):
+        if self.head==None:
+            print("list is empty")
+            return
+        
+        itr=self.head
+        llstr=' ' #string to save values
+        
+        while itr:
+            llstr += str(itr.data)+"-->"
+            itr=itr.next
+        
+        print(llstr)
+        
+l1=linked_list()
+l1.insert_at_end(5)
+l1.insert_at_end(10)
+l1.insert_at_end(30)
+l1.insert_values([13,34,5,7,8,6,4,3,3])
+l1.print()
+l1.remove_at(5)
+l1.print()
+l1.remove_at(5)
+l1.print()
+l1.insert_at(5,8)
+l1.print()
+l1.insert_at(1,7)
+l1.print()
+l1.insert_at(0,1000)
+l1.print()
