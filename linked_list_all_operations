@@ -7,13 +7,10 @@ class linked_list:
     def __init__(self):
         self.head=None
         
-    #insert at the begnning
-    def insert_at_beg(self,data):
+    def inserttion_at_beg(self,data):
         node=Node(data,self.head)
         self.head=node
-    
-    # insertion at the end
-    def insert_at_end(self,data):
+    def inserttion_at_end(self,data):
         if self.head==None:
             self.head=Node(data,None)
             return
@@ -21,88 +18,119 @@ class linked_list:
         itr=self.head
         while itr.next:
             itr=itr.next
-        
         itr.next=Node(data,None)
     
-    #insert values from a list
-    def insert_values(self,data_list):
+    def insert_values(self,list):
         self.head=None
-        for data in data_list:
-            self.insert_at_end(data)
-    
-    # get the length of the linked list     
+        for i in list:
+            self.inserttion_at_end(i)
+            
     def get_length(self):
+        if self.head==None:
+            print('List is empty')
         count=0
         itr=self.head
         while itr:
-            itr=itr.next
             count+=1
+            itr=itr.next
         return count
-    
-    # removing element at the given index:
+        
     def remove_at(self,index):
         if index<0 or index>=self.get_length():
-            raise Exception('Not valid index')
-        # at the begining
+            raise Exception('Invalid index')
+        
         if index==0:
             self.head=self.head.next
-            return
         
-        count=0
         itr=self.head
+        count=0
         while itr:
-            if count == index-1:
+            if count==index-1:
                 itr.next=itr.next.next
                 break
             itr=itr.next
             count+=1
-    
-    # indertion at given index
-    def insert_at(self,index,data):
-        if index<0 or index>=self.get_length():
-            raise Exception('Not valid index')
-        #at the begining    
+            
+    def insertion_at(self,index,data):
+        if index<0 or index>self.get_length():
+            raise Exception('Invalid Index')
+            
         if index==0:
             node=Node(data,self.head)
             self.head=node
-        
-        count=0
+            return
+            
         itr=self.head
+        count=0
         while itr:
-            if count == index-1:
+            if count==index-1:
                 node=Node(data,itr.next)
                 itr.next=node
                 break
             itr=itr.next
-            count+=0
-    
-    def print(self):
-        if self.head==None:
-            print("list is empty")
+            count+=1
+            
+    def insert_after_value(self,prev_data,next_data):
+        if self.head is None:
+            return
+        if self.head.data==prev_data:
+            self.head.next=Node(next_data,self.head.next)
             return
         
         itr=self.head
-        llstr=' ' #string to save values
+        while itr:
+            if itr.data==prev_data:
+                node=Node(next_data,itr.next)
+                itr.next=node
+            itr=itr.next
+    
+    def remove_by_value(self,data1):
+        if self.head is None:
+            return
+        if self.head.data==data1:
+            self.head=self.head.next
+            return
+        itr=self.head
+        while itr.next:
+            if itr.next.data==data1:
+                itr.next=itr.next.next
+                break
+            itr=itr.next
+            
+    def print(self):
+        if self.head==None:
+            print("List is empty")
+            return
+        
+        itr=self.head
+        llstr=" "
         
         while itr:
-            llstr += str(itr.data)+"-->"
+            llstr+=str(itr.data)+"-->"
             itr=itr.next
-        
         print(llstr)
         
-l1=linked_list()
-l1.insert_at_end(5)
-l1.insert_at_end(10)
-l1.insert_at_end(30)
-l1.insert_values([13,34,5,7,8,6,4,3,3])
-l1.print()
-l1.remove_at(5)
-l1.print()
-l1.remove_at(5)
-l1.print()
-l1.insert_at(5,8)
-l1.print()
-l1.insert_at(1,7)
-l1.print()
-l1.insert_at(0,1000)
-l1.print()
+ll=linked_list()
+ll.inserttion_at_beg(10)
+ll.inserttion_at_beg(20)
+ll.inserttion_at_end(200)
+ll.inserttion_at_end(77)
+ll.insert_values([22,55,6,88,22,44])
+ll.print()
+ll.remove_at(0)
+ll.print()
+ll.remove_at(3)
+ll.print()
+ll.insertion_at(2,33)
+ll.print()
+ll.insertion_at(2,88)
+ll.print()
+ll.insertion_at(0,1)
+ll.print()
+ll.get_length()
+ll.insert_after_value(33,22)
+ll.print()
+ll.remove_by_value(33)
+ll.print()
+ll.remove_by_value(22)
+ll.print()
